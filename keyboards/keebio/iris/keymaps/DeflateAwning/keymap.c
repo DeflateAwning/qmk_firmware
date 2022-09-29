@@ -7,8 +7,12 @@ enum my_layers {
     _ADJUST
 };
 
-//const uint16_t PROGMEM combo_oeu[] = {KC_O, KC_E, KC_U, COMBO_END};
-
+#define COMBO_COUNT 1
+const uint16_t PROGMEM combo_oeu[] = {KC_O, KC_E, KC_U, COMBO_END};
+combo_t key_combos[COMBO_COUNT] = {
+    COMBO(combo_oeu, MO(_VI_ARROWS))
+};
+uint16_t COMBO_LEN = COMBO_COUNT;
 
 #define RAISE MO(_RAISE)
 #define LOWER MO(_LOWER)
