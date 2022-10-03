@@ -10,9 +10,13 @@ This keyboard layout was forked from the `keebio/iris -> dvorak` mapping, with i
     * Shift-selecting with the arrow keys, and jumping by word with the arrow keys and Ctrl is easy.
 
 ## To Do Changes
-* Game mode, especially for copy/paste/cut hotkeys, which are very useful on the left hand.
+* Game mode, especially for copy/paste/cut/undo hotkeys, which are very useful on the left hand.
 * Setup Plover via Gemini PR protocol.
 * Create PDF cheat sheet to print.
+* Holding the LOWER key doesn't continue holding Alt for Alt+Tab
+* SHIFT+Backpace yields DELETE
+    * https://github.com/rpbaptist/qmk_firmware/blob/2eb9f227c10a242996dba746b8a2b9ed2edd315c/keyboards/crkbd/keymaps/rpbaptist/keymap.c#L504
+    * https://www.reddit.com/r/olkb/comments/h7xpc7/shift_back_space_delete_is_this_possible/
 
 ## Building
 
