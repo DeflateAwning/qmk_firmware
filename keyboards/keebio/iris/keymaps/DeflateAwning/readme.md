@@ -16,6 +16,7 @@ This keyboard layout was forked from the `keebio/iris -> dvorak` mapping, with i
 * Create PDF cheat sheet to print.
 * Holding the LOWER key doesn't continue holding Alt for Alt+Tab
 * Striking the left-thumb shift key very fast should type a space.
+* Turn lights on when QWERTY mode is on, and highlight the exit key from QWERTY mode.
 
 ## Building
 

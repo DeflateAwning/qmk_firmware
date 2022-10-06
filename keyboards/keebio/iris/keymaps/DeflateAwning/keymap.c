@@ -8,10 +8,13 @@ enum my_layers {
     _ADJUST
 };
 
-#define COMBO_COUNT 1
+#define COMBO_COUNT 2
 const uint16_t PROGMEM combo_oeu[] = {KC_O, KC_E, KC_U, COMBO_END};
+const uint16_t PROGMEM combo_sdf[] = {KC_S, KC_D, KC_F, COMBO_END};
+
 combo_t key_combos[COMBO_COUNT] = {
-    COMBO(combo_oeu, MO(_VI_ARROWS))
+    COMBO(combo_oeu, MO(_VI_ARROWS)),
+    COMBO(combo_sdf, MO(_VI_ARROWS))
 };
 uint16_t COMBO_LEN = COMBO_COUNT;
 
@@ -67,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, _______, _______, B_QWE  , KC_BSLS, KC_LCBR, KC_LPRN,          KC_RPRN, KC_RCBR, KC_P1,   KC_P2,   KC_P3,   KC_MINS, KC_PIPE,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    _______, KC_LGUI, KC_LSFT,                    KC_DEL,  KC_RALT, KC_P0
+                                    _______, KC_LGUI, KC_LSFT,                    KC_DEL,  KC_P0,  KC_DOT
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
