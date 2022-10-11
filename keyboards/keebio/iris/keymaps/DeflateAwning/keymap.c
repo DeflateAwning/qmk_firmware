@@ -1,4 +1,6 @@
 #include QMK_KEYBOARD_H
+#include "../../../users/callum/swapper.h"
+
 enum my_layers {
     _DVORAK,
     _QWERTY, // access with button on the _LOWER layer
@@ -25,8 +27,11 @@ uint16_t COMBO_LEN = COMBO_COUNT;
 
 #define ALTTAB LALT(KC_TAB) // FIXME needs to be a macro or something that holds down the ALT key after pressing tab
 
+bool sw_alt_active = false;
+
 enum custom_keycodes {
-   BSP_DEL = SAFE_RANGE
+   BSP_DEL = SAFE_RANGE,
+   SW_WIN
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -64,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      KC_GRAVE, KC_EXLM, KC_AT,  KC_HASH, KC_DLR,  KC_PERC,                            KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, BSP_DEL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     ALTTAB,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,
+     SW_WIN,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_LEFT,  KC_UP,  KC_DOWN, KC_RGHT, KC_LBRC,                            KC_RBRC, KC_P4,   KC_P5,   KC_P6,   KC_PLUS, KC_BSPC,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
@@ -129,10 +134,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
    uint16_t temp_keycode = keycode;
    static uint8_t saved_mods = 0;
 
+   
+   // Press ALT+TAB with LOWER key
+   // Source (docs): https://github.com/qmk/qmk_firmware/tree/master/users/callum#swapper
+   // Source (example): https://github.com/qmk/qmk_firmware/blob/868c7b52930fc6d3f44a57cb257fcc39e60ac3d0/users/callum/callum.c#L99
+   update_swapper(
+        &sw_alt_active, KC_LALT, KC_TAB, SW_WIN,
+        keycode, record
+    );
+
+
    switch (temp_keycode) {
 
-      // turn Shift+Backspace into a forwards Delete
-      // source: https://github.com/rpbaptist/qmk_firmware/blob/2eb9f227c10a242996dba746b8a2b9ed2edd315c/keyboards/crkbd/keymaps/rpbaptist/keymap.c#L504
+      // Turn Shift+Backspace into a forwards Delete
+      // Source: https://github.com/rpbaptist/qmk_firmware/blob/2eb9f227c10a242996dba746b8a2b9ed2edd315c/keyboards/crkbd/keymaps/rpbaptist/keymap.c#L504
       case BSP_DEL:
          if (record->event.pressed) {
                saved_mods = get_mods() & MOD_MASK_SHIFT;
