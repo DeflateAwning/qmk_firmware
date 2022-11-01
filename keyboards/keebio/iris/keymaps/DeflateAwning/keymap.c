@@ -1,5 +1,8 @@
+
 #include QMK_KEYBOARD_H
 #include "swapper.h"
+#include "keymap_steno.h"
+
 
 enum my_layers {
     _DVORAK,
@@ -7,6 +10,7 @@ enum my_layers {
     _LOWER, // access with left-hand layer key
     _RAISE, // access with right-hand layer key
     _VI_ARROWS, // access by pressing "OEU" as a chord/combo
+    _PLOVER_GEM,
     _ADJUST
 };
 
@@ -31,7 +35,9 @@ bool sw_alt_active = false;
 
 enum custom_keycodes {
    BSP_DEL = SAFE_RANGE,
-   SW_WIN
+   SW_WIN,
+   PLO_GEM,
+   EXT_PLV
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -44,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_A,    KC_O,    KC_E,    KC_U,    KC_I,                               KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_MINS,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_HOME,          KC_END,  KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_ENT,
+     KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_MPLY,          KC_END,  KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_ENT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     LOWER,   KC_LGUI,  KC_LSFT,                   KC_SPC,  KC_RALT, RAISE
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -59,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, B_DVO,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    _______,          _______, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_MPLY,          _______, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     LOWER,   KC_LGUI,  KC_LSFT,                   KC_SPC,  KC_RALT, RAISE
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -73,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_LEFT,  KC_UP,  KC_DOWN, KC_RGHT, KC_LBRC,                            KC_RBRC,  KC_4,    KC_5,    KC_6,   KC_PLUS, KC_BSPC,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT, _______, _______, B_QWE  , KC_BSLS, KC_LCBR, KC_LPRN,          KC_RPRN, KC_RCBR,  KC_1,    KC_2,    KC_3,   KC_MINS, KC_PIPE,
+     KC_LSFT, _______, _______, B_QWE  , KC_BSLS, KC_LCBR, KC_MPLY,          KC_RPRN, KC_RCBR,  KC_1,    KC_2,    KC_3,   KC_MINS, KC_PIPE,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, KC_LGUI, KC_LSFT,                   KC_LSFT,  KC_0,    KC_DOT
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -88,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_MPRV, KC_MNXT, KC_VOLU, KC_PGUP, KC_UNDS,                            KC_EQL,  KC_HOME, RGB_HUI, RGB_SAI, RGB_VAI, KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT, KC_MSTP, KC_MPLY, KC_VOLD, KC_PGDN, KC_MINS, _______,          _______, KC_PLUS, KC_END,  RGB_HUD, RGB_SAD, RGB_VAD, _______,
+     KC_LSFT, KC_MSTP, KC_MPLY, KC_VOLD, KC_PGDN, PLO_GEM, KC_MPLY,          _______, KC_PLUS, KC_END,  RGB_HUD, RGB_SAD, RGB_VAD, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, KC_LGUI, KC_LSFT,                   _______, KC_RALT, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -109,6 +115,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
+  [_PLOVER_GEM] = LAYOUT(
+  //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
+     EXT_PLV, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
+     XXXXXXX, STN_S1,  STN_TL,  STN_PL,  STN_HL,  STN_ST1,                            STN_ST3, STN_FR,  STN_PR,  STN_LR,  STN_TR,  STN_DR,
+  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
+     XXXXXXX, STN_S2,  STN_KL,  STN_WL,  STN_RL,  STN_ST2,                            STN_ST4, STN_RR,  STN_BR,  STN_GR,  STN_SR,  STN_ZR,
+  //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
+     STN_N1,  STN_N2,  STN_N3,  STN_N4,  STN_N5,  STN_N6,  KC_MPLY,          XXXXXXX, STN_N7,  STN_N8,  STN_N9,  STN_NA,  STN_NB,  STN_NC,
+  //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
+                                    XXXXXXX, STN_A,   STN_O,                     STN_E,   STN_U,   XXXXXXX
+                                // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
+  ),
 
   [_ADJUST] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
@@ -166,10 +185,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                unregister_code(KC_BSPC);
          }
          return false;
+         break;
+
+      case PLO_GEM:
+         
+         layer_off(_RAISE);
+         layer_off(_LOWER);
+         layer_off(_ADJUST);
+         layer_on(_PLOVER_GEM);
+
+         return false;
+         break;
+
+      case EXT_PLV:
+         layer_off(_PLOVER_GEM);
+         return false;
+         break;
 
    }
 
    return true;
 
+}
+
+
+
+void matrix_init_user() {
+  // set the steno protocol
+  steno_set_mode(STENO_MODE_GEMINI);
+
+  // set the bootup layer
+  //layer_on(_PLOVER_GEM);
 }
 

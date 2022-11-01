@@ -21,3 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define EE_HANDS
 // docs: https://docs.qmk.fm/#/config_options?id=defines-for-handedness
+
+#define FORCE_NKRO
+// https://beta.docs.qmk.fm/developing-qmk/qmk-reference/config_options#:~:text=your%20code%20size.-,%23define%20FORCE_NKRO,-NKRO%20by%20default
