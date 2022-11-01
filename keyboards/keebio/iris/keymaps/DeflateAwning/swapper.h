@@ -12,13 +12,15 @@
 //     nav down, trigger, nav up -> nav down, cmd down, tab, cmd up, nav up
 //
 // This behaviour is useful for more than just cmd-tab, hence: cmdish, tabish.
-void update_swapper(
+bool update_swapper(
     bool *active,
     uint16_t cmdish,
     uint16_t tabish,
     uint16_t trigger,
     uint16_t keycode,
     keyrecord_t *record,
-	bool escape_on_shift // best option: false
+	bool escape_on_shift, // best option: false
+	bool escape_on_esc, // best option: false
+	bool shift_on_nearby_keys // best option: true
 );
 

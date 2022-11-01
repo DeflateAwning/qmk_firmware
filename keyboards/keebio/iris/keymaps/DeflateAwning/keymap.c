@@ -157,10 +157,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
    // Press ALT+TAB with LOWER key
    // Source (docs): https://github.com/qmk/qmk_firmware/tree/master/users/callum#swapper
    // Source (example): https://github.com/qmk/qmk_firmware/blob/868c7b52930fc6d3f44a57cb257fcc39e60ac3d0/users/callum/callum.c#L99
-   update_swapper(
+   if (! update_swapper(
         &sw_alt_active, KC_LALT, KC_TAB, SW_WIN,
-        keycode, record, false
-    );
+        keycode, record, false, false, true
+    )) return false;
 
 
    switch (temp_keycode) {
