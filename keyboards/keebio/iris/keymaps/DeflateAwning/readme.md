@@ -13,10 +13,8 @@ This keyboard layout was forked from the `keebio/iris -> dvorak` mapping, with i
 * SHIFT+Backpace sends forwards DELETE.
 
 ## To Do Changes
-* Setup Plover via Gemini PR protocol.
-* Create PDF cheat sheet to print.
 * Striking the left-thumb shift key very fast should type a space.
-* Turn lights on when QWERTY mode is on, and highlight the exit key from QWERTY mode.
+* Turn lights on when QWERTY mode is on, and highlight the exit key from QWERTY mode. (https://github.com/lalde/iris_keymap/blob/master/keymap.c)
 * Ctrl+Backspace deletes word behind cursor already; make Ctrl+Shift+Backspace delete word ahead of cursor by jumping forward a word then Ctrl+Backspacing in one big macro.
 
 ## Building
