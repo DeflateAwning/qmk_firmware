@@ -214,10 +214,11 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
       switch(biton32(layer_state)) {
 
          case _QWERTY:
+         case _DVORAK:
             if (clockwise) {
-               tap_code(KC_VOLU);
+               tap_code(KC_RGHT);
             } else {
-               tap_code(KC_VOLD);
+               tap_code(KC_LEFT);
             }
             break;
 
@@ -231,9 +232,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
          case _RAISE:
             if (clockwise) {
-               tap_code(KC_RGHT);
+               tap_code(KC_VOLU);
             } else {
-               tap_code(KC_LEFT);
+               tap_code(KC_VOLD);
             }
             break;
       }
