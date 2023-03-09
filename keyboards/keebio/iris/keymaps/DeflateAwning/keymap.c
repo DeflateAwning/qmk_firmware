@@ -36,7 +36,7 @@ enum custom_keycodes {
    SW_WIN,
    PLO_GEM,
    EXT_PLV,
-   CTRL_QWER // allow use of QWERTY hotkeys by using this key instead
+   CTRL_QWER // allow use of QWERTY hotkeys by using this key instead; should've used LM(_QWERTY, MOD_LCTL) instead
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -187,7 +187,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
          return false;
          break;
 
-      case CTRL_QWER:
+      case CTRL_QWER: // TODO use LM(_QWERTY, MOD_LCTL) instead of this handler
          if (record->event.pressed) {
             register_code(KC_LCTRL);
             layer_on(_QWERTY);
