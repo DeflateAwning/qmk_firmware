@@ -35,7 +35,8 @@ enum custom_keycodes {
    BSP_DEL = SAFE_RANGE,
    SW_WIN,
    PLO_GEM,
-   EXT_PLV
+   EXT_PLV,
+   CTRL_QWER // allow use of QWERTY hotkeys by using this key instead
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -48,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_A,    KC_O,    KC_E,    KC_U,    KC_I,                               KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_MINS,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_MPLY,          KC_MNXT, KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_ENT,
+    CTRL_QWER,KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_MPLY,          KC_MNXT, KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_ENT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     LOWER,   KC_LGUI,  KC_LSFT,                   KC_SPC,  KC_RALT, RAISE
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -142,6 +143,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 };
 
+
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
@@ -167,25 +169,38 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       // Source: https://github.com/rpbaptist/qmk_firmware/blob/2eb9f227c10a242996dba746b8a2b9ed2edd315c/keyboards/crkbd/keymaps/rpbaptist/keymap.c#L504
       case BSP_DEL:
          if (record->event.pressed) {
-               saved_mods = get_mods() & MOD_MASK_SHIFT;
+            saved_mods = get_mods() & MOD_MASK_SHIFT;
 
-               if (saved_mods == MOD_MASK_SHIFT) {  // Both shifts pressed
-                  register_code(KC_DEL);
-               } else if (saved_mods) {   // One shift pressed
-                  del_mods(saved_mods);  // Remove any Shifts present
-                  register_code(KC_DEL);
-                  add_mods(saved_mods);  // Add shifts again
-               } else {
-                  register_code(KC_BSPC);
-               }
+            if (saved_mods == MOD_MASK_SHIFT) {  // Both shifts pressed
+               register_code(KC_DEL);
+            } else if (saved_mods) {   // One shift pressed
+               del_mods(saved_mods);  // Remove any Shifts present
+               register_code(KC_DEL);
+               add_mods(saved_mods);  // Add shifts again
+            } else {
+               register_code(KC_BSPC);
+            }
          } else {
-               unregister_code(KC_DEL);
-               unregister_code(KC_BSPC);
+            unregister_code(KC_DEL);
+            unregister_code(KC_BSPC);
          }
          return false;
          break;
 
-      case PLO_GEM:
+      case CTRL_QWER:
+         if (record->event.pressed) {
+            register_code(KC_LCTRL);
+            layer_on(_QWERTY);
+         }
+         else {
+            unregister_code(KC_LCTRL);
+            layer_off(_QWERTY);
+         }
+
+         return false;
+         break;
+
+      case PLO_GEM: // TODO this could probably be done the same way as the other layer activations/deacts
          
          layer_off(_RAISE);
          layer_off(_LOWER);
