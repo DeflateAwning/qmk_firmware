@@ -162,6 +162,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         keycode, record, false, false, true
     )) return false;
 
+   
+   // Make Windows+K on Dvorak press Windows+V
+   if (record->event.pressed && (get_mods() & MOD_BIT(KC_LGUI)) && (keycode == KC_K)) {
+      tap_code(KC_V); // KC_LGUI is already pressed, so no need to add that modifier
+      return false; // stop handling (i.e., don't press the letter K)
+   }
 
    switch (temp_keycode) {
 
