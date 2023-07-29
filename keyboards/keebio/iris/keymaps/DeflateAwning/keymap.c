@@ -7,6 +7,7 @@
 enum my_layers {
    _DVORAK,
    _QWERTY, // access with button on the _LOWER layer
+   _WORKMAN, // access with the activate button
    _LOWER, // access with left-hand layer key
    _RAISE, // access with right-hand layer key
    _VI_ARROWS, // access by pressing "OEU" as a chord/combo
@@ -14,13 +15,15 @@ enum my_layers {
    _ADJUST
 };
 
-#define COMBO_COUNT 2
+#define COMBO_COUNT 3
 const uint16_t PROGMEM combo_oeu[] = {KC_O, KC_E, KC_U, COMBO_END};
 const uint16_t PROGMEM combo_sdf[] = {KC_S, KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM combo_sht[] = {KC_S, KC_H, KC_T, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
    COMBO(combo_oeu, MO(_VI_ARROWS)),
-   COMBO(combo_sdf, MO(_VI_ARROWS))
+   COMBO(combo_sdf, MO(_VI_ARROWS)),
+   COMBO(combo_sht, MO(_VI_ARROWS))
 };
 uint16_t COMBO_LEN = COMBO_COUNT;
 
@@ -28,6 +31,7 @@ uint16_t COMBO_LEN = COMBO_COUNT;
 #define LOWER MO(_LOWER)
 #define B_QWE DF(_QWERTY) // set default base layer
 #define B_DVO DF(_DVORAK) // set default base layer
+#define B_WRK DF(_WORKMAN) // set default base layer
 
 bool sw_alt_active = false;
 
@@ -54,7 +58,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                     LOWER,   KC_LGUI,  KC_LSFT,                   KC_SPC,  KC_RALT, RAISE
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
-
   
   [_QWERTY] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
@@ -70,7 +73,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
-  [_LOWER] = LAYOUT(
+  [_WORKMAN] = LAYOUT(
+  //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
+     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    BSP_DEL,
+  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
+     KC_TAB,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,                               KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, KC_QUOT,
+  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
+     KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,                               KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_MINS,
+  //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
+    CTRL_QWER,KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    KC_MPLY,          B_DVO,   KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH,  KC_ENT,
+  //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
+                                    LOWER,   KC_LGUI,  KC_LSFT,                   KC_SPC,  KC_RALT, RAISE
+                                // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
+  ),
+
+  [_LOWER] = LAYOUT( // Left Layer Key
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      KC_GRAVE, KC_EXLM, KC_AT,  KC_HASH, KC_DLR,  KC_PERC,                            KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, BSP_DEL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -78,14 +95,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_LEFT,  KC_UP,  KC_DOWN, KC_RGHT, KC_LBRC,                            KC_RBRC,  KC_4,    KC_5,    KC_6,   KC_PLUS, KC_BSPC,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT, _______, _______, B_QWE  , KC_BSLS, KC_LCBR, KC_MPLY,          KC_MNXT, KC_RCBR,  KC_1,    KC_2,    KC_3,   KC_MINS, KC_PIPE,
+     KC_LSFT, _______, _______, B_QWE  , B_WRK, KC_LCBR, KC_MPLY,          KC_MNXT, KC_RCBR,  KC_1,    KC_2,    KC_3,   KC_MINS, KC_PIPE,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, KC_LGUI, KC_LSFT,                   KC_LSFT,  KC_0,    KC_DOT
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
   
-  [_RAISE] = LAYOUT(
+  [_RAISE] = LAYOUT( // Right Layer Key
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                              KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
