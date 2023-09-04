@@ -6,8 +6,8 @@
 
 enum my_layers {
    _DVORAK,
-   _QWERTY, // access with button on the _LOWER layer
    _WORKMAN, // access with the activate button
+   _QWERTY, // access with button on the _LOWER layer
    _LOWER, // access with left-hand layer key
    _RAISE, // access with right-hand layer key
    _VI_ARROWS, // access by pressing "OEU" as a chord/combo
@@ -32,6 +32,7 @@ uint16_t COMBO_LEN = COMBO_COUNT;
 #define B_QWE DF(_QWERTY) // set default base layer
 #define B_DVO DF(_DVORAK) // set default base layer
 #define B_WRK DF(_WORKMAN) // set default base layer
+#define CTRL_QWER LM(_QWERTY, MOD_LCTL) // momentarily activate QWERTY layer, with LCTL active
 
 bool sw_alt_active = false;
 
@@ -39,9 +40,10 @@ enum custom_keycodes {
    BSP_DEL = SAFE_RANGE,
    SW_WIN,
    PLO_GEM,
-   EXT_PLV,
-   CTRL_QWER // allow use of QWERTY hotkeys by using this key instead; should've used LM(_QWERTY, MOD_LCTL) instead
+   EXT_PLV
 };
+
+// Note: KC_PSCR = KC_PRINT_SCREEN
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -58,20 +60,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                     LOWER,   KC_LGUI,  KC_LSFT,                   KC_SPC,  KC_RALT, RAISE
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
-  
-  [_QWERTY] = LAYOUT(
-  //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    BSP_DEL,
-  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
-  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
-  //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    B_DVO,            B_DVO,   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_LSFT,
-  //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    LOWER,   KC_LGUI,  KC_LSFT,                   KC_SPC,  KC_RALT, RAISE
-                                // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
-  ),
 
   [_WORKMAN] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
@@ -82,6 +70,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,                               KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_MINS,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
     CTRL_QWER,KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    KC_MPLY,          B_DVO,   KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH,  KC_ENT,
+  //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
+                                    LOWER,   KC_LGUI,  KC_LSFT,                   KC_SPC,  KC_RALT, RAISE
+                                // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
+  ),
+  
+  [_QWERTY] = LAYOUT(
+  //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
+     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    BSP_DEL,
+  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
+     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
+  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
+     KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
+  //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
+     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    B_DVO,            B_DVO,   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_LSFT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     LOWER,   KC_LGUI,  KC_LSFT,                   KC_SPC,  KC_RALT, RAISE
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -108,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                            KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LCTL, KC_MPRV, KC_MNXT, KC_VOLU, KC_PGUP, KC_UNDS,                            KC_EQL,  KC_HOME, RGB_HUI, RGB_SAI, RGB_VAI, KC_BSLS,
+     KC_LCTL, KC_MPRV, KC_MNXT, KC_VOLU, KC_PGUP, KC_PSCR,                            KC_EQL,  KC_HOME, RGB_HUI, RGB_SAI, RGB_VAI, KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_MSTP, KC_MPLY, KC_VOLD, KC_PGDN, PLO_GEM, KC_MPLY,          KC_MNXT, KC_PLUS, KC_END,  RGB_HUD, RGB_SAD, RGB_VAD, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
@@ -210,18 +212,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
          return false;
          break;
 
-      case CTRL_QWER: // TODO use LM(_QWERTY, MOD_LCTL) instead of this handler
-         if (record->event.pressed) {
-            register_code(KC_LCTRL);
-            layer_on(_QWERTY);
-         }
-         else {
-            unregister_code(KC_LCTRL);
-            layer_off(_QWERTY);
-         }
-
-         return false;
-         break;
+      // case CTRL_QWER: // TODO use LM(_QWERTY, MOD_LCTL) instead of this handler
+      //    if (record->event.pressed) {
+      //       register_code(KC_LCTRL);
+      //       layer_on(_QWERTY);
+      //    }
+      //    else {
+      //       unregister_code(KC_LCTRL);
+      //       layer_off(_QWERTY);
+      //    }
+      //    return false;
+      //    break;
 
       case PLO_GEM: // TODO this could probably be done the same way as the other layer activations/deacts
          
