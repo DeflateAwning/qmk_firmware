@@ -293,10 +293,10 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 
 void matrix_init_user() {
-  // set the steno protocol
-  steno_set_mode(STENO_MODE_GEMINI);
+   // set the steno protocol
+   steno_set_mode(STENO_MODE_GEMINI);
 
-  // set the bootup layer
-  //layer_on(_PLOVER_GEM);
+   // set the default layer on boot
+   layer_on(_WORKMAN);
+   //layer_on(_PLOVER_GEM);
 }
-
