@@ -19,7 +19,7 @@ This keyboard layout was forked from the `keebio/iris -> dvorak` mapping, with i
 
 ## Building
 
-```
+```bash
 qmk compile -kb keebio/iris/rev6b -km DeflateAwning
 ```
 
