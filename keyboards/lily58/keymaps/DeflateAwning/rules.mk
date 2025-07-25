@@ -20,6 +20,8 @@ SRC +=  ./lib/rgb_state_reader.c \
         # ./lib/host_led_state_reader.c \
         # ./lib/timelogger.c \
 
+SRC += ./swapper.c
+
 
 # Depending on hardware either 'CONVERT_TO=sparkfun_pm2040' or 'CONVERT_TO=rp2040_ce' should be used instead.
 # Guide: https://docs.qmk.fm/feature_converters#pro-micro
@@ -28,3 +30,8 @@ SRC +=  ./lib/rgb_state_reader.c \
 # Depending on hardware either 'CONVERT_TO=sparkfun_pm2040' or 'CONVERT_TO=rp2040_ce' should be used instead.
 
 CONVERT_TO = rp2040_ce
+
+
+# Extra settings.
+STENO_ENABLE = yes
+COMBO_ENABLE = yes
