@@ -40,6 +40,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_SAT_STEP 17
 #define RGBLIGHT_VAL_STEP 17
 
+// Enable storing the left vs. right hand layout in EEPROM.
+// Add the `-bl` flag when flashing, per https://docs.qmk.fm/features/split_keyboard#handedness-by-eeprom
+#define EE_HANDS
+
+
 // Underglow
 /*
 #undef RGBLIGHT_LED_COUNT
