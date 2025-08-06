@@ -5,20 +5,20 @@
 
 
 enum my_layers {
-   _WORKMAN, // access with the activate button
+   _WORKMAN,
    _DVORAK,
-   _QWERTY, // access with button on the _LOWER layer
-   _LOWER, // access with left-hand layer key
-   _RAISE, // access with right-hand layer key
-   _VI_ARROWS, // access by pressing "OEU" as a chord/combo
+   _QWERTY, // Access with button on the _LOWER layer (and Ctrl+QWERTY presses).
+   _LOWER, // Access with left-hand layer key.
+   _RAISE, // Access with right-hand layer key.
+   _VI_ARROWS, // Access by pressing "OEU" as a chord/combo.
    _PLOVER_GEM,
    _ADJUST
 };
 
 #define COMBO_COUNT 3
-const uint16_t PROGMEM combo_oeu[] = {KC_O, KC_E, KC_U, COMBO_END};
-const uint16_t PROGMEM combo_sdf[] = {KC_S, KC_D, KC_F, COMBO_END};
-const uint16_t PROGMEM combo_sht[] = {KC_S, KC_H, KC_T, COMBO_END};
+const uint16_t PROGMEM combo_oeu[] = {KC_O, KC_E, KC_U, COMBO_END}; // Dvorak.
+const uint16_t PROGMEM combo_sdf[] = {KC_S, KC_D, KC_F, COMBO_END}; // QWERTY.
+const uint16_t PROGMEM combo_sht[] = {KC_S, KC_H, KC_T, COMBO_END}; // Workman.
 
 combo_t key_combos[COMBO_COUNT] = {
    COMBO(combo_oeu, MO(_VI_ARROWS)),
@@ -29,10 +29,10 @@ uint16_t COMBO_LEN = COMBO_COUNT;
 
 #define RAISE MO(_RAISE)
 #define LOWER MO(_LOWER)
-#define B_QWE DF(_QWERTY) // set default base layer
-#define B_DVO DF(_DVORAK) // set default base layer
-#define B_WRK DF(_WORKMAN) // set default base layer
-#define CTRL_QWER LM(_QWERTY, MOD_LCTL) // momentarily activate QWERTY layer, with LCTL active
+#define B_QWE DF(_QWERTY) // Set default base layer.
+#define B_DVO DF(_DVORAK) // Set default base layer.
+#define B_WRK DF(_WORKMAN) // Set default base layer.
+#define CTRL_QWER LM(_QWERTY, MOD_LCTL) // Momentarily activate QWERTY layer, with LCTL active.
 
 bool sw_alt_active = false;
 
@@ -55,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_A,    KC_S,    KC_H,    KC_T,    KC_G,                               KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_MINS,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-    CTRL_QWER,KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    KC_MPLY,          B_DVO,   KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH,  KC_ENT,
+    CTRL_QWER,KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    XXXXXXX,          XXXXXXX, KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH,  KC_ENT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                        _______,     LOWER,   KC_LGUI,  KC_LSFT,                   KC_SPC,  KC_RALT, RAISE,    _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -69,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_A,    KC_O,    KC_E,    KC_U,    KC_I,                               KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_MINS,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-    CTRL_QWER,KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_MPLY,          KC_MNXT, KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_ENT,
+    CTRL_QWER,KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    XXXXXXX,          XXXXXXX, KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_ENT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                        _______,     LOWER,   KC_LGUI,  KC_LSFT,                   KC_SPC,  KC_RALT, RAISE,    _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -83,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    B_DVO,            B_DVO,   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_LSFT,
+     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    XXXXXXX,          XXXXXXX, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_LSFT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                        _______,     LOWER,   KC_LGUI,  KC_LSFT,                   KC_SPC,  KC_RALT, RAISE,    _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -97,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_LEFT,  KC_UP,  KC_DOWN, KC_RGHT, KC_LBRC,                            KC_RBRC,  KC_4,    KC_5,    KC_6,   KC_PLUS, KC_BSPC,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT, _______,  B_DVO,   B_QWE  , B_WRK, KC_LCBR,  KC_MPLY,          KC_MNXT, KC_RCBR,  KC_1,    KC_2,    KC_3,   KC_MINS, KC_PIPE,
+     KC_LSFT, _______,  B_DVO,   B_QWE  , B_WRK, KC_LCBR,  XXXXXXX,          XXXXXXX, KC_RCBR,  KC_1,    KC_2,    KC_3,   KC_MINS, KC_PIPE,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                        _______,     _______, KC_LGUI, KC_LSFT,                   KC_LSFT,  KC_0,    KC_DOT,  _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -112,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LCTL, KC_MPRV, KC_MNXT, KC_VOLU, KC_PGUP, KC_PSCR,                            KC_EQL,  KC_HOME, RGB_HUI, RGB_SAI, RGB_VAI, KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT, KC_MSTP, KC_MPLY, KC_VOLD, KC_PGDN, PLO_GEM, KC_MPLY,          KC_MNXT, KC_PLUS, KC_END,  RGB_HUD, RGB_SAD, KC_GRAVE, _______,
+     KC_LSFT, KC_MSTP, KC_MPLY, KC_VOLD, KC_PGDN, PLO_GEM, XXXXXXX,          XXXXXXX, KC_PLUS, KC_END,  RGB_HUD, RGB_SAD, KC_GRAVE, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                        _______,     _______, KC_LGUI, KC_LSFT,                   _______, KC_RALT, _______,  _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -141,7 +141,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      XXXXXXX, STN_S2,  STN_KL,  STN_WL,  STN_RL,  STN_ST2,                            STN_ST4, STN_RR,  STN_BR,  STN_GR,  STN_SR,  STN_ZR,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     STN_N1,  STN_N2,  STN_N3,  STN_N4,  STN_N5,  STN_N6,  KC_MPLY,          KC_MNXT, STN_N7,  STN_N8,  STN_N9,  STN_NA,  STN_NB,  STN_NC,
+     STN_N1,  STN_N2,  STN_N3,  STN_N4,  STN_N5,  STN_N6,  XXXXXXX,          XXXXXXX, STN_N7,  STN_N8,  STN_N9,  STN_NA,  STN_NB,  STN_NC,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                          _______,    XXXXXXX, STN_A,   STN_O,                     STN_E,   STN_U,   XXXXXXX, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -225,16 +225,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
    // Press ALT+TAB with LOWER key
    // Source (docs): https://github.com/qmk/qmk_firmware/tree/master/users/callum#swapper
    // Source (example): https://github.com/qmk/qmk_firmware/blob/868c7b52930fc6d3f44a57cb257fcc39e60ac3d0/users/callum/callum.c#L99
-   if (! update_swapper(
+   if (
+      !update_swapper(
         &sw_alt_active, KC_LALT, KC_TAB, SW_WIN,
         keycode, record, false, false, true
-    )) return false;
+      )
+   ) {
+      return false;
+   }
 
    
-   // Make Windows+K on Dvorak press Windows+V
+   // Make Windows+K on Dvorak press Windows+V.
    if (record->event.pressed && (get_mods() & MOD_BIT(KC_LGUI)) && (keycode == KC_K)) {
       tap_code(KC_V); // KC_LGUI is already pressed, so no need to add that modifier
-      return false; // stop handling (i.e., don't press the letter K)
+      return false; // Stop handling (i.e., don't press the letter K).
    }
 
    switch (temp_keycode) {
@@ -247,14 +251,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             if (saved_mods == MOD_MASK_SHIFT) {  // Both shifts pressed
                register_code(KC_DEL);
-            } else if (saved_mods) {   // One shift pressed
+            }
+            else if (saved_mods) {   // One shift pressed
                del_mods(saved_mods);  // Remove any Shifts present
                register_code(KC_DEL);
                add_mods(saved_mods);  // Add shifts again
-            } else {
+            }
+            else {
                register_code(KC_BSPC);
             }
-         } else {
+         }
+         else {
             unregister_code(KC_DEL);
             unregister_code(KC_BSPC);
          }
@@ -273,8 +280,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       //    return false;
       //    break;
 
-      case PLO_GEM: // TODO this could probably be done the same way as the other layer activations/deacts
-         
+      case PLO_GEM:
+         // TODO: This could probably be done the same way as the other layer activations/deactivations.
          layer_off(_RAISE);
          layer_off(_LOWER);
          layer_off(_ADJUST);
@@ -295,8 +302,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
-   if (index == 0) {
-      // left encoder
+   if (index == 0) { // Left encoder.
       switch(biton32(layer_state)) {
 
          case _QWERTY:
@@ -325,10 +331,8 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
             break;
       }
    }
-   else if (index == 1) {
-      // right encoder
-
-      // useful for going forward and back in history if Ctrl is held
+   else if (index == 1) { // Right encoder.
+      // Useful for going forward and back in history if Ctrl is held.
       if (clockwise) {
          tap_code(KC_RGHT);
       } else {
@@ -342,10 +346,10 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 
 void matrix_init_user() {
-   // set the steno protocol
+   // Set the steno protocol.
    steno_set_mode(STENO_MODE_GEMINI);
 
-   // set the default layer on boot
+   // Set the default layer on boot.
    layer_on(_WORKMAN);
    //layer_on(_PLOVER_GEM);
 }
