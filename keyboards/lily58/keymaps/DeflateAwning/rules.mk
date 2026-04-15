@@ -35,3 +35,6 @@ CONVERT_TO = rp2040_ce
 # Extra settings.
 STENO_ENABLE = yes
 COMBO_ENABLE = yes
+
+# Can explicitly set the board model (rev1 or rev1_repair_col4). Best to set during the build command though.
+# KEYBOARD = lily58/rev1_repair_col4
